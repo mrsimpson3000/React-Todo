@@ -10,9 +10,10 @@ class App extends React.Component {
 
   constructor() {
     super();
-    const todoList = [];
+    // const todoList = [];
     this.state = {
-      todoList
+      item: "",
+      todoList: []
     };
   }
 
@@ -34,18 +35,33 @@ class App extends React.Component {
 
   clearCompleted = event => {
     event.preventDefault();
-    console.log(event);
+    console.log("Cleared");
+    // this.setState({
+    //   todoList: this.state.todoList.filter(item => !item.completed)
+    // });
+  };
+
+  handleChange = event => {
+    this.setState({ [event.target.name]: event.target.value });
+  };
+
+  handleSubmit = event => {
+    event.preventDefault();
+    // this.setState({ item: "" });
+    // this.props.addItem(event, this.state.item);
   };
 
   render() {
     return (
       <div>
-        <TodoList
-          todoList={this.state.todoList}
-          toggleItem={this.toggleItem}
+        <TodoList todoList={this.state.todoList} toggleItem={this.toggleItem} />
+        <TodoForm
+          addItem={this.addItem}
           clearCompleted={this.clearCompleted}
+          handleChange={this.handleChange}
+          handleSubmit={this.handleSubmit}
+          item={this.state.item}
         />
-        <TodoForm addItem={this.addItem} />
       </div>
     );
   }
