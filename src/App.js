@@ -35,10 +35,10 @@ class App extends React.Component {
 
   clearCompleted = event => {
     event.preventDefault();
-    console.log("Cleared");
-    // this.setState({
-    //   todoList: this.state.todoList.filter(item => !item.completed)
-    // });
+    // console.log("Cleared");
+    this.setState({
+      todoList: this.state.todoList.filter(item => !item.completed)
+    });
   };
 
   handleChange = event => {
