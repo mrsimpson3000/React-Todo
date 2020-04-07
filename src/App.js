@@ -12,18 +12,26 @@ class App extends React.Component {
     super();
     // const todoList = [];
     this.state = {
-      item: "",
+      task: "",
       todoList: []
     };
   }
-
-  addItem = (event, item) => {
+  handleSubmit = event => {
     event.preventDefault();
+    // this.setState({ task: "" });
+    // this.props.addTask(event, this.state.task);
+  };
+
+  addTask = event => {
+    event.preventDefault();
+    console.log(this.props.todo);
     const newTask = {
-      task: item,
+      task: this.props.todo,
       id: Date.now(),
       completed: false
     };
+    console.log(`this is the task: ${newTask.task}`);
+
     this.setState({
       todoList: [...this.state.todoList, newTask]
     });
@@ -37,7 +45,7 @@ class App extends React.Component {
     event.preventDefault();
     // console.log("Cleared");
     this.setState({
-      todoList: this.state.todoList.filter(item => !item.completed)
+      todoList: this.state.todoList.filter(todo => !todo.completed)
     });
   };
 
@@ -45,22 +53,16 @@ class App extends React.Component {
     this.setState({ [event.target.name]: event.target.value });
   };
 
-  handleSubmit = event => {
-    event.preventDefault();
-    // this.setState({ item: "" });
-    // this.props.addItem(event, this.state.item);
-  };
-
   render() {
     return (
       <div>
         <TodoList todoList={this.state.todoList} toggleItem={this.toggleItem} />
         <TodoForm
-          addItem={this.addItem}
+          addTask={this.addTask}
           clearCompleted={this.clearCompleted}
           handleChange={this.handleChange}
           handleSubmit={this.handleSubmit}
-          item={this.state.item}
+          todo={this.state.task}
         />
       </div>
     );
