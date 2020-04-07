@@ -10,35 +10,46 @@ class App extends React.Component {
 
   constructor() {
     super();
-    // const todoList = [];
     this.state = {
-      task: "",
+      item: "",
       todoList: []
     };
   }
-  handleSubmit = event => {
-    event.preventDefault();
-    // this.setState({ task: "" });
-    // this.props.addTask(event, this.state.task);
-  };
 
-  addTask = event => {
+  addTask = (event, inputName) => {
     event.preventDefault();
-    console.log(this.props.todo);
+
     const newTask = {
-      task: this.props.todo,
+      task: inputName,
       id: Date.now(),
       completed: false
     };
-    console.log(`this is the task: ${newTask.task}`);
 
     this.setState({
       todoList: [...this.state.todoList, newTask]
     });
   };
 
+  handleSubmit = event => {
+    event.preventDefault();
+    this.setState({
+      item: ""
+    });
+    this.addTask(event, this.state.item);
+  };
+
   toggleItem = itemId => {
-    console.log(itemId);
+    this.setState({
+      todoList: this.state.todoList.map(item => {
+        if (itemId === item.id) {
+          return {
+            ...item,
+            completed: !item.completed
+          };
+        }
+        return item;
+      })
+    });
   };
 
   clearCompleted = event => {
@@ -50,7 +61,7 @@ class App extends React.Component {
   };
 
   handleChange = event => {
-    this.setState({ [event.target.name]: event.target.value });
+    this.setState({ item: event.target.value });
   };
 
   render() {
@@ -58,11 +69,10 @@ class App extends React.Component {
       <div>
         <TodoList todoList={this.state.todoList} toggleItem={this.toggleItem} />
         <TodoForm
-          addTask={this.addTask}
           clearCompleted={this.clearCompleted}
           handleChange={this.handleChange}
           handleSubmit={this.handleSubmit}
-          todo={this.state.task}
+          todo={this.state.item}
         />
       </div>
     );
