@@ -1,0 +1,17 @@
+body {
+  background-color: blue;
+  /* color: white; */
+}
+
+.item {
+  cursor: pointer;
+}
+
+.item.completed {
+  text-decoration: line-through;
+  color: red;
+}
+
+.dumpsterJuice {
+  color: white;
+}
